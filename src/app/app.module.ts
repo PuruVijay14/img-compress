@@ -1,20 +1,23 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
-import { DropzoneDirective } from './dropzone.directive';
-import { FileUploadComponent } from './file-upload/file-upload.component';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
+  MatButtonModule,
   MatCardModule,
-  MatButtonModule, MatIconModule,
-  MatProgressBarModule
+  MatIconModule,
+  MatListModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule
 } from "@angular/material";
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { DropzoneDirective } from './dropzone.directive';
+import { FileUploadComponent } from './file-upload/file-upload.component';
+
 
 @NgModule({
   declarations: [
@@ -23,7 +26,7 @@ import {
     FileUploadComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
@@ -32,6 +35,8 @@ import {
     MatCardModule,
     MatButtonModule,
     MatIconModule,
+    MatProgressSpinnerModule,
+    MatListModule,
     MatProgressBarModule
   ],
   providers: [],
