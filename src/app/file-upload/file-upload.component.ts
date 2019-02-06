@@ -1,7 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
-import { forkJoin, from, Observable, of, combineLatest } from 'rxjs';
-import { concatAll, map, reduce, combineAll } from "rxjs/operators";
+import { forkJoin, from, Observable } from 'rxjs';
+import { finalize, map } from "rxjs/operators";
+import { httpFactory } from '@angular/http/src/http_module';
 
 @Component({
   selector: 'app-file-upload',
@@ -11,7 +13,7 @@ import { concatAll, map, reduce, combineAll } from "rxjs/operators";
 })
 export class FileUploadComponent implements OnInit {
 
-  // Main tasks
+  // Main taskskz
   tasks: Array<AngularFireUploadTask> = [];
 
   // Percantage
@@ -27,7 +29,8 @@ export class FileUploadComponent implements OnInit {
   isHovering: boolean;
 
   constructor(
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private http: HttpClient
   ) { }
 
   ngOnInit() {
@@ -42,6 +45,7 @@ export class FileUploadComponent implements OnInit {
     // The file object
     // const file = event.item(0);
     const files = [];
+    const filePaths = [];
 
     for (let i = 0; i < event.length; i++) {
       files.push(event.item(i));
@@ -55,8 +59,10 @@ export class FileUploadComponent implements OnInit {
         // Totally optional metadata
         const customMetadata = {
           name: file.name,
-          size: `${file.size}`
+          size: `${file.size}`,
         };
+
+        filePaths.push(path);
 
         const task = this.storage.upload(path, file, { customMetadata });
 
@@ -66,47 +72,13 @@ export class FileUploadComponent implements OnInit {
       })
     );
 
-    // const This = this;
-    // console.log(files$);
     forkJoin(files$).pipe(
-      map(([item]) => {
-        // This.tasks.push(item);
-        return item.percentageChanges();
-      }),
-      combineAll()
-    ).subscribe(console.log);
-
-
-
-    // Client-side validation example
-    // if (file.type.split('/')[0] !== 'image') {
-    //   console.error('Unsupported file type ☹');
-    // }
-
-    /* for (const file of files) {
-      // The storage path
-      const path = `${new Date().getTime()}_${file.name}`;
-
-      // Totally optional metadata
-      const customMetadata = {
-        app: 'img-compress'
-      };
-
-      // The main task
-      this.task = this.storage.upload(path, file, { customMetadata });
-
-      // Progress monitoring
-      this.percantage = combineLatest(this.percantage, this.task.percentageChanges())
-        .pipe(
-          map(([p1], p2) => (p1 + p2) / files.length)
-        );
-      this.snapshot = this.task.snapshotChanges();
-      this.percantage.subscribe(console.log);
-
-      this.task.then(() => {
-        this.downloadURL = this.storage.ref(path).getDownloadURL();
-      });
-  } */
+      finalize(() => {
+        this.http
+          .post('http://localhost:5000/img-compress/us-central1/compress', { filePaths })
+          .subscribe(console.log);
+      })
+    ).subscribe(data => console.log(files));
 
   }
 
