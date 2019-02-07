@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { forkJoin, from, Observable } from 'rxjs';
-import { finalize, map } from "rxjs/operators";
+import { map } from "rxjs/operators";
 
 @Component({
   selector: 'app-file-upload',
@@ -71,13 +71,7 @@ export class FileUploadComponent implements OnInit {
       })
     );
 
-    forkJoin(files$).pipe(
-      finalize(() => {
-        this.http
-          .post('http://localhost:5000/img-compress/us-central1/compress', { filePaths })
-          .subscribe(console.log);
-      })
-    ).subscribe(data => console.log(files));
+    forkJoin(files$).subscribe(data => console.log(files));
 
   }
 
