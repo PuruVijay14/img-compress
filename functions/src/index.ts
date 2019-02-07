@@ -1,54 +1,52 @@
-import { storage } from "firebase-admin";
 import * as functions from "firebase-functions";
-import { mkdir, unlinkSync } from "fs";
+import { storage, initializeApp } from "firebase-admin";
 import { tmpdir } from "os";
-import { basename, dirname, extname, join } from "path";
-import imagemin = require("imagemin");
-const imagePngQuant = require("imagemin-pngquant");
+import { join, normalize } from "path";
+
+import * as imagemin from "imagemin";
+import imageminPngquant from "imagemin-pngquant";
+import { unlink } from "fs";
+
+initializeApp(functions.config().firebase);
 
 const compress = functions.storage.object().onFinalize(async object => {
-  const filePath = `${object.name}`;
-  const baseFileName = basename(filePath, extname(filePath));
-  const fileDir = dirname(filePath);
-  const tempLocalFile = join(tmpdir(), `min@${filePath}`);
-  const tempLocalDir = dirname(tempLocalFile);
-  const metadata = object.metadata;
-
-  const bucket = storage().bucket(object.bucket);
-
-  // Exit if this is triggered on a minified image
-  if (filePath.startsWith("min@")) {
-    return null;
-  }
-
-  // Create the temp directory where the storage file will be downloaded
-  mkdir(tempLocalDir, async error => {
-    if (error) {
-      console.log(error);
-      return;
+    const fileName = `${object.name}`;
+    const bucket = storage().bucket(object.bucket);
+    const minFileName = `min@${fileName}`;
+    const tmpFile = join(tmpdir(), minFileName);
+    const metadata = object.metadata;
+    // If the newly created file is minified, stop the function
+    if (fileName.startsWith('@min')) {
+        console.log(`Already minified.`);
+        return null;
     }
 
-    // Download file from bucket
-    await bucket.file(filePath).download({ destination: tempLocalFile });
-    console.log(`The file has been downloaded to ${tempLocalFile}`);
-
-    // Compress the image
-    await imagemin([tempLocalFile], tempLocalDir, {
-      plugins: [
-        imagePngQuant({
-          quality: [0.6, 0.8]
-        })
-      ]
+    // Download the file
+    await bucket.file(fileName).download({
+        destination: tmpFile
     });
 
-    // Upload
-    await bucket.upload(tempLocalFile);
-    
-    unlinkSync(tempLocalFile);
+    // Now minify
+    const files = await imagemin([tmpFile], tmpdir(), {
+        plugins: [
+            imageminPngquant({
+                quality: [0.1, 0.8]
+            })
+        ]
+    });
 
-    return null;
+    console.log(metadata);
 
-  });
+    // Now upload
+    await bucket.upload(normalize(tmpFile), {
+        gzip: true
+    });
+
+    await bucket.file(fileName).delete();
+
+    // Delete the tmpdir
+    return unlink(tmpFile, err => console.log(err));
+
 });
 
-export { compress };
+export { compress }

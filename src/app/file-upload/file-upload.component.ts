@@ -3,7 +3,6 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { forkJoin, from, Observable } from 'rxjs';
 import { finalize, map } from "rxjs/operators";
-import { httpFactory } from '@angular/http/src/http_module';
 
 @Component({
   selector: 'app-file-upload',

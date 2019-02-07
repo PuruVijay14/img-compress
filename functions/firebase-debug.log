@@ -1,18 +1,26 @@
-[debug] [2019-02-07T12:44:58.456Z] ----------------------------------------------------------------------
-[debug] [2019-02-07T12:44:58.459Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Dr. Sandeep Vijay\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions
-[debug] [2019-02-07T12:44:58.459Z] CLI Version:   6.3.0
-[debug] [2019-02-07T12:44:58.459Z] Platform:      win32
-[debug] [2019-02-07T12:44:58.459Z] Node Version:  v8.14.0
-[debug] [2019-02-07T12:44:58.492Z] Time:          Thu Feb 07 2019 18:14:58 GMT+0530 (India Standard Time)
-[debug] [2019-02-07T12:44:58.492Z] ----------------------------------------------------------------------
+[debug] [2019-02-07T18:05:53.981Z] ----------------------------------------------------------------------
+[debug] [2019-02-07T18:05:53.989Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Admin\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js experimental:functions:shell
+[debug] [2019-02-07T18:05:53.989Z] CLI Version:   6.2.2
+[debug] [2019-02-07T18:05:53.989Z] Platform:      win32
+[debug] [2019-02-07T18:05:53.990Z] Node Version:  v8.11.0
+[debug] [2019-02-07T18:05:53.991Z] Time:          Thu Feb 07 2019 23:35:53 GMT+0530 (India Standard Time)
+[debug] [2019-02-07T18:05:53.991Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2019-02-07T12:44:58.669Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2019-02-07T12:44:58.673Z] > authorizing via signed-in user
-[debug] [2019-02-07T12:44:58.673Z] [iam] checking project img-compress for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
-[debug] [2019-02-07T12:44:58.677Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] [2019-02-07T12:44:58.677Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
- <request body omitted>
-[debug] [2019-02-07T12:44:59.176Z] <<< HTTP RESPONSE 200
-[debug] [2019-02-07T12:44:59.239Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/img-compress:testIamPermissions  
+[debug] [2019-02-07T18:05:54.023Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-07T18:05:54.024Z] > authorizing via signed-in user
+[debug] [2019-02-07T18:05:54.024Z] [iam] checking project img-compress for permissions ["firebase.projects.get"]
+[debug] [2019-02-07T18:05:54.029Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/img-compress:testIamPermissions  
 
-[debug] [2019-02-07T12:45:01.232Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-07T18:05:56.108Z] <<< HTTP RESPONSE 200
+[info] i  functions: Preparing to emulate functions.
+[debug] [2019-02-07T18:05:58.369Z] Fetching environment
+[debug] [2019-02-07T18:05:58.373Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/img-compress  
+ 
+[debug] [2019-02-07T18:06:00.250Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-07T18:06:00.253Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/354971042909:getServerAppConfig  
+ 
+[debug] [2019-02-07T18:06:01.200Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-07T18:06:01.201Z] Starting @google-cloud/functions-emulator
+[debug] [2019-02-07T18:06:05.418Z] Parsing function triggers
+[debug] [2019-02-07T18:06:06.430Z] Deploying functions locally
+[info] +  functions: compress

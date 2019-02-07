@@ -1,0 +1,21 @@
+{
+  "name": "1549562453229_SamplePNGImage_100kbmb.png",
+  "bucket": "img-compress.appspot.com",
+  "generation": "1549562455853579",
+  "metageneration": "1",
+  "contentType": "image/png",
+  "timeCreated": "2019-02-07T18:00:55.853Z",
+  "updated": "2019-02-07T18:00:55.853Z",
+  "storageClass": "STANDARD",
+  "size": "104327",
+  "md5Hash": "DwVnzS57u3CeZAFpfxvRfQ==",
+  "contentEncoding": "identity",
+  "contentDisposition": "inline; filename*=utf-8''1549562453229_SamplePNGImage_100kbmb.png",
+  "crc32c": "qczG+A==",
+  "etag": "CIuU9P2ZquACEAE=",
+  "downloadTokens": "de9e7e35-c854-4304-9000-0745ea38c502",
+  "metadata": {
+    "size": "104327",
+    "name": "SamplePNGImage_100kbmb.png"
+  }
+}
